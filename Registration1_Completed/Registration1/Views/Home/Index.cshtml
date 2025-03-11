@@ -1,0 +1,340 @@
+﻿@model Registration1.Models.Entities
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .main-content {
+            margin-top: 80px;
+        }
+
+        .registration-card {
+            width: 100%;
+            margin: 20px auto;
+            padding: 0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.1);
+        }
+
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #f1f1f1;
+            padding: 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+            .logo span {
+                color: #00b3ff;
+            }
+
+        .form-control {
+            border-radius: 6px;
+            padding: .75rem 1rem;
+            height: auto;
+            border: 1px solid #e2e8f0;
+        }
+
+            .form-control:focus {
+                border-color: #4a5568;
+                box-shadow: 0 0 0 0.2rem rgba(74, 85, 104, 0.25);
+            }
+
+        .form-group label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .btn-primary {
+            padding: .75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 6px;
+            background-color: #00b3ff;
+            border-color: #00b3ff;
+        }
+
+            .btn-primary:hover {
+                background-color: #0099df;
+                border-color: #0099df;
+            }
+
+        .btn-success {
+            padding: .75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid {
+            border-color: #dc3545;
+        }
+
+        .table {
+            font-size: 0.875rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+            .table thead th {
+                background: #343a40;
+                color: white;
+                border: none;
+                padding: 1rem;
+            }
+
+            .table td {
+                padding: 1rem;
+                vertical-align: middle;
+            }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.02);
+        }
+        .small-btn {
+            padding: 4px 10px; /* Reduce padding */
+            font-size: 12px; /* Smaller font */
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <h4 class="logo mb-0">HUB<span>Dash</span></h4>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="@Url.Action("Logout", "Home")" class="nav-link">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="registration-card">
+            <div class="card">
+                <div class="card-body p-4">
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "registrationForm" }))
+                    {
+                        @Html.Raw(TempData["SuccessMessage"])
+                        @Html.AntiForgeryToken()
+
+                        <h3 class="mb-4 text-center">Employee Registration</h3>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="FirstName">First Name</label>
+                                    @Html.TextBoxFor(model => model.FirstName, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "FirstName" })
+                                    @Html.ValidationMessageFor(model => model.FirstName)
+                                    @Html.HiddenFor(model => model.Id)
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="LastName">Last Name</label>
+                                    @Html.TextBoxFor(model => model.LastName, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "LastName" })
+                                    @Html.ValidationMessageFor(model => model.LastName)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="Email">Email</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "Email" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="Birthdate">Birth Date</label>
+                                    @Html.TextBoxFor(model => model.Birthdate, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "Birthdate", type = "date" })
+                                    @Html.ValidationMessageFor(model => model.Birthdate)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="PhoneNumber">Phone Number</label>
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "PhoneNumber" })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="Address">Address</label>
+                                    @Html.TextBoxFor(model => model.Address, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "Address" })
+                                    @Html.ValidationMessageFor(model => model.Address)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="State">State</label>
+                                    <select id="State" class="form-control">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="City">City</label>
+                                    <select id="City" class="form-control">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="Password">Password</label>
+                                    @Html.PasswordFor(model => model.Password, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "Password" })
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="ConfirmPassword">Confirm Password</label>
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @autofocus = "true", @class = "form-control", @maxlength = "250", id = "ConfirmPassword" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-primary mr-2" id="ClearButton">
+                                <i class="fas fa-redo mr-1"></i>Reset
+                            </button>
+                            <button type="button" class="btn btn-success" id="InsertButton">
+                                <i class="fas fa-check mr-1"></i>Submit
+                            </button>
+                        </div>
+                    }
+
+                    <div class="mt-5">
+                        <h3>Registered Users</h3>
+                        <div class="table-responsive">
+                            <table id="userTable" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Birthdate</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Registered users will be appended here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Form.js"></script>
+    <script src="~/Scripts/register.js"></script>
+    <script>
+        // Session timeout
+        @*setTimeout(function () {
+            alert("Session expired! Redirecting to login page.");
+            window.location.href = "/Home/Login";
+        }, @(Session.Timeout * 60000));
+*@
+        // City-State data
+        var cityState = {
+            "States": {
+                "Gujrat": ["Kutch", "Vadodara", "Ahmedabad"],
+                "Maharashtra": ["Mumbai", "Pune", "Nashik"],
+                "Rajasthan": ["Jaipur", "Jaisalmer", "Udaipur"]
+            }
+        };
+
+        // Initialize state-city dropdowns
+        window.onload = function () {
+            var state = document.getElementById("State");
+            var city = document.getElementById("City");
+
+            for (var x in cityState.States) {
+                state.options[state.options.length] = new Option(x, x);
+            }
+
+            state.onchange = function () {
+                city.length = 1;
+                var selectedState = this.value;
+                if (selectedState in cityState.States) {
+                    cityState.States[selectedState].forEach(function (cityName) {
+                        city.options[city.options.length] = new Option(cityName, cityName);
+                    });
+                }
+            };
+        };
+    </script>
+</body>
+</html>
