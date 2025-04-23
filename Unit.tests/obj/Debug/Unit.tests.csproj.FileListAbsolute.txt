@@ -1,0 +1,2 @@
+D:\MVC_Registration-main\MVC_Registration-main\Registration1_Completed\Unit.tests\obj\Debug\Unit.tests.csproj.AssemblyReference.cache
+D:\MVC_Registration-main\MVC_Registration-main\Registration1_Completed\Unit.tests\obj\Debug\Unit.tests.csproj.CoreCompileInputs.cache
